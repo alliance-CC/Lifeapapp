@@ -64,7 +64,10 @@ const settingSections = [
 
 export default function SettingsPage() {
   const { theme, updateTheme } = useTheme()
-  const [apiKey, setApiKey] = useState("")
+  const [apiKey, setApiKey] = useState(() => {
+    if (typeof window !== "undefined") return localStorage.getItem("lifeup-openai-key") || ""
+    return ""
+  })
   const [showApiInput, setShowApiInput] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -313,7 +316,8 @@ export default function SettingsPage() {
                       </button>
                       <motion.button
                         onClick={() => {
-                          toast.success("APIキーを保存しました（暗号化済み）")
+                          localStorage.setItem("lifeup-openai-key", apiKey)
+                          toast.success("OpenAI APIキーを保存しました")
                           setShowApiInput(false)
                         }}
                         className="flex-1 py-2 rounded-lg bg-orange-600 text-white text-sm"
