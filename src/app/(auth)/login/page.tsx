@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react"
-import { createClient } from "@/lib/supabase/client"
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client"
 import toast from "react-hot-toast"
 
 export default function LoginPage() {
@@ -17,6 +17,14 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+
+    // Supabase が未設定の場合はデモモードとしてダッシュボードへ
+    if (!isSupabaseConfigured()) {
+      toast.success("デモモードでログインしました")
+      router.push("/dashboard")
+      setLoading(false)
+      return
+    }
 
     try {
       const supabase = createClient()
