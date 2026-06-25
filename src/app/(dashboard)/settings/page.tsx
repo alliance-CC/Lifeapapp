@@ -52,7 +52,7 @@ export default function SettingsPage() {
     <div className="p-6 md:p-8 space-y-6">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Settings className="w-6 h-6 text-violet-400" />
+          <Settings className="w-6 h-6 text-orange-400" />
           設定
         </h1>
         <p className="text-white/50 text-sm mt-1">アプリの各種設定を管理</p>
@@ -82,8 +82,8 @@ export default function SettingsPage() {
                     className="w-full flex items-center gap-4 p-4 hover:bg-white/3 transition-all text-left"
                     whileHover={{ x: 2 }}
                   >
-                    <div className="w-9 h-9 rounded-xl bg-violet-600/15 border border-violet-500/20 flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-violet-400" />
+                    <div className="w-9 h-9 rounded-xl bg-orange-600/15 border border-orange-500/20 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-orange-400" />
                     </div>
                     <div className="flex-1">
                       <p className="text-white text-sm font-medium">{item.label}</p>
@@ -100,7 +100,7 @@ export default function SettingsPage() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-2 bg-white/5 border border-violet-500/20 rounded-xl p-4 space-y-3"
+                className="mt-2 bg-white/5 border border-orange-500/20 rounded-xl p-4 space-y-3"
               >
                 <p className="text-white/70 text-sm font-medium">APIキーを入力</p>
                 <input
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
                   placeholder="sk-... または AI..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 text-sm focus:outline-none focus:border-violet-500/50"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500/50"
                 />
                 <div className="flex gap-2">
                   <button
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                       toast.success("APIキーを保存しました（暗号化済み）")
                       setShowApiInput(false)
                     }}
-                    className="flex-1 py-2 rounded-lg bg-violet-600 text-white text-sm"
+                    className="flex-1 py-2 rounded-lg bg-orange-600 text-white text-sm"
                     whileHover={{ scale: 1.02 }}
                   >
                     保存

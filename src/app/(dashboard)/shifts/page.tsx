@@ -46,7 +46,7 @@ export default function ShiftsPage() {
     `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`
 
   const shiftTypeStyle = {
-    work: "bg-violet-500/20 border-violet-500/30 text-violet-300",
+    work: "bg-orange-500/20 border-orange-500/30 text-orange-300",
     off: "bg-red-500/10 border-red-500/20 text-red-400",
     holiday: "bg-gray-500/10 border-gray-500/20 text-gray-500",
   }
@@ -55,7 +55,7 @@ export default function ShiftsPage() {
     <div className="p-6 md:p-8 space-y-6">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Calendar className="w-6 h-6 text-violet-400" />
+          <Calendar className="w-6 h-6 text-orange-400" />
           シフト管理
         </h1>
         <p className="text-white/50 text-sm mt-1">スプレッドシートより自動取得</p>
@@ -93,7 +93,7 @@ export default function ShiftsPage() {
               key={d}
               className={cn(
                 "text-center text-xs font-medium py-2",
-                i === 0 ? "text-red-400" : i === 6 ? "text-blue-400" : "text-white/40"
+                i === 0 ? "text-red-400" : i === 6 ? "text-zinc-400" : "text-white/40"
               )}
             >
               {d}
@@ -118,7 +118,7 @@ export default function ShiftsPage() {
                 key={day}
                 className={cn(
                   "relative aspect-square rounded-lg flex flex-col items-center justify-center text-xs cursor-pointer",
-                  isToday ? "bg-violet-600/30 border border-violet-500/50" : "hover:bg-white/5",
+                  isToday ? "bg-orange-600/30 border border-orange-500/50" : "hover:bg-white/5",
                   shift ? `border ${shiftTypeStyle[shift.type]}` : ""
                 )}
                 whileHover={{ scale: 1.05 }}
@@ -127,18 +127,18 @@ export default function ShiftsPage() {
                   className={cn(
                     "font-medium",
                     isToday
-                      ? "text-violet-300"
+                      ? "text-orange-300"
                       : dow === 0
                       ? "text-red-400"
                       : dow === 6
-                      ? "text-blue-400"
+                      ? "text-zinc-400"
                       : "text-white/80"
                   )}
                 >
                   {day}
                 </span>
                 {shift?.type === "work" && (
-                  <span className="text-violet-300/60 text-[9px] leading-none mt-0.5 hidden sm:block">
+                  <span className="text-orange-300/60 text-[9px] leading-none mt-0.5 hidden sm:block">
                     {shift.start}
                   </span>
                 )}
@@ -173,14 +173,14 @@ export default function ShiftsPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-violet-600/10 border border-violet-500/20 rounded-2xl p-5 flex items-center gap-4"
+        className="bg-orange-600/10 border border-orange-500/20 rounded-2xl p-5 flex items-center gap-4"
       >
-        <div className="w-12 h-12 rounded-xl bg-violet-500/20 flex items-center justify-center">
-          <Clock className="w-6 h-6 text-violet-400" />
+        <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center">
+          <Clock className="w-6 h-6 text-orange-400" />
         </div>
         <div>
           <p className="text-white font-medium">今日のシフト</p>
-          <p className="text-violet-300 text-sm">09:00 〜 18:00（通常勤務）</p>
+          <p className="text-orange-300 text-sm">09:00 〜 18:00（通常勤務）</p>
         </div>
       </motion.div>
     </div>

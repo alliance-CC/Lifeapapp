@@ -64,14 +64,14 @@ export default function ReportsPage() {
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <FileText className="w-6 h-6 text-violet-400" />
+            <FileText className="w-6 h-6 text-orange-400" />
             日報
           </h1>
           <p className="text-white/50 text-sm mt-1">1日の振り返りを記録しよう</p>
         </div>
         <motion.button
           onClick={() => setIsCreating(!isCreating)}
-          className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm font-medium px-4 py-2 rounded-xl"
+          className="flex items-center gap-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white text-sm font-medium px-4 py-2 rounded-xl"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -87,10 +87,10 @@ export default function ReportsPage() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="bg-white/5 border border-violet-500/20 rounded-2xl p-6 space-y-4 overflow-hidden"
+            className="bg-white/5 border border-orange-500/20 rounded-2xl p-6 space-y-4 overflow-hidden"
           >
             <h2 className="text-white font-semibold flex items-center gap-2">
-              <Plus className="w-4 h-4 text-violet-400" />
+              <Plus className="w-4 h-4 text-orange-400" />
               本日の日報（{new Date().toLocaleDateString("ja-JP")}）
             </h2>
 
@@ -147,7 +147,7 @@ export default function ReportsPage() {
               <motion.button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="flex-1 bg-gradient-to-r from-violet-600 to-pink-600 text-white py-3 rounded-xl text-sm font-medium disabled:opacity-50"
+                className="flex-1 bg-gradient-to-r from-orange-600 to-amber-600 text-white py-3 rounded-xl text-sm font-medium disabled:opacity-50"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -173,8 +173,8 @@ export default function ReportsPage() {
               onClick={() => setExpandedId(expandedId === report.id ? null : report.id)}
               className="w-full flex items-center gap-4 p-4 hover:bg-white/3 transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/20 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-violet-400" />
+              <div className="w-10 h-10 rounded-xl bg-orange-600/20 border border-orange-500/20 flex items-center justify-center">
+                <FileText className="w-5 h-5 text-orange-400" />
               </div>
               <div className="flex-1 text-left">
                 <p className="text-white font-medium text-sm">
@@ -183,7 +183,7 @@ export default function ReportsPage() {
                 <p className="text-white/40 text-xs truncate">{report.good}</p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-violet-400 bg-violet-400/10 px-2 py-0.5 rounded-full">+{report.expEarned} EXP</span>
+                <span className="text-xs text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded-full">+{report.expEarned} EXP</span>
                 <motion.div animate={{ rotate: expandedId === report.id ? 180 : 0 }}>
                   <ChevronDown className="w-4 h-4 text-white/40" />
                 </motion.div>
@@ -211,10 +211,10 @@ export default function ReportsPage() {
                       <p className="text-orange-400 text-xs font-medium mb-1">原因分析</p>
                       <p className="text-white/70 text-sm">{report.badCause}</p>
                     </div>
-                    <div className="bg-violet-500/10 border border-violet-500/20 rounded-xl p-3 flex gap-3">
-                      <Bot className="w-5 h-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 flex gap-3">
+                      <Bot className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-violet-400 text-xs font-medium mb-1">AIアドバイス</p>
+                        <p className="text-orange-400 text-xs font-medium mb-1">AIアドバイス</p>
                         <p className="text-white/70 text-sm">{report.aiAdvice}</p>
                       </div>
                     </div>

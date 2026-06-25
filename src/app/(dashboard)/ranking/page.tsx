@@ -6,11 +6,11 @@ import { Trophy, Crown, Medal, TrendingUp, TrendingDown, Minus } from "lucide-re
 import { cn } from "@/lib/utils"
 
 const rankColors = {
-  S: "from-yellow-400 to-orange-500",
-  A: "from-violet-400 to-purple-500",
-  B: "from-blue-400 to-cyan-500",
-  C: "from-green-400 to-emerald-500",
-  D: "from-gray-400 to-slate-500",
+  S: "from-orange-400 to-orange-600",
+  A: "from-zinc-200 to-zinc-400",
+  B: "from-zinc-400 to-zinc-500",
+  C: "from-gray-500 to-gray-600",
+  D: "from-gray-600 to-gray-700",
 }
 
 const rankingData = [
@@ -36,7 +36,7 @@ export default function RankingPage() {
     <div className="p-6 md:p-8 space-y-6">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Trophy className="w-6 h-6 text-yellow-400" />
+          <Trophy className="w-6 h-6 text-orange-400" />
           ランキング
         </h1>
         <p className="text-white/50 text-sm mt-1">2024年6月 月間ランキング</p>
@@ -50,7 +50,7 @@ export default function RankingPage() {
             onClick={() => setView(v)}
             className={cn(
               "px-4 py-2 rounded-lg text-sm transition-all",
-              view === v ? "bg-violet-600 text-white font-medium" : "text-white/50 hover:text-white/80"
+              view === v ? "bg-orange-600 text-white font-medium" : "text-white/50 hover:text-white/80"
             )}
           >
             {v === "monthly" ? "今月" : "累計"}
@@ -82,27 +82,27 @@ export default function RankingPage() {
           <motion.div
             animate={{ y: [-3, 3, -3] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-2xl mb-2 border-4 border-yellow-400/50 shadow-lg shadow-yellow-500/30"
+            className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-2xl mb-2 border-4 border-orange-400/50 shadow-lg shadow-orange-500/30"
           >
             {top3[0].name[0]}
           </motion.div>
-          <Crown className="w-5 h-5 text-yellow-400 mb-1" />
+          <Crown className="w-5 h-5 text-orange-400 mb-1" />
           <p className="text-white text-sm font-bold text-center">{top3[0].name}</p>
-          <p className="text-yellow-400 text-xs">{top3[0].monthlyExp.toLocaleString()} EXP</p>
-          <div className="w-24 h-28 bg-yellow-500/20 border border-yellow-500/30 rounded-t-xl mt-2 flex items-end justify-center pb-2">
-            <Trophy className="w-8 h-8 text-yellow-400" />
+          <p className="text-orange-400 text-xs">{top3[0].monthlyExp.toLocaleString()} EXP</p>
+          <div className="w-24 h-28 bg-orange-500/20 border border-orange-500/30 rounded-t-xl mt-2 flex items-end justify-center pb-2">
+            <Trophy className="w-8 h-8 text-orange-400" />
           </div>
         </div>
 
         {/* 3rd */}
         <div className="flex flex-col items-center">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-lg mb-2 border-2 border-amber-600/50">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center text-lg mb-2 border-2 border-gray-500/50">
             {top3[2].name[0]}
           </div>
           <p className="text-white text-xs font-medium text-center w-20 truncate">{top3[2].name}</p>
           <p className="text-white/40 text-xs">{top3[2].monthlyExp.toLocaleString()} EXP</p>
-          <div className="w-16 h-14 bg-amber-700/20 border border-amber-700/30 rounded-t-xl mt-2 flex items-end justify-center pb-2">
-            <Medal className="w-5 h-5 text-amber-600" />
+          <div className="w-16 h-14 bg-gray-600/20 border border-gray-600/30 rounded-t-xl mt-2 flex items-end justify-center pb-2">
+            <Medal className="w-5 h-5 text-gray-400" />
           </div>
         </div>
       </motion.div>
@@ -118,7 +118,7 @@ export default function RankingPage() {
             className="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/8 transition-all"
           >
             <span className="w-6 text-center text-white/40 font-bold">{entry.rank}</span>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center text-white font-bold">
               {entry.name[0]}
             </div>
             <div className="flex-1">

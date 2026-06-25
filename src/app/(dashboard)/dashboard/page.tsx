@@ -25,17 +25,17 @@ const expData = [
 ]
 
 const rankingData = [
-  { name: "田中 太郎", department: "営業部", exp: 2840, rank: "S", color: "from-yellow-400 to-orange-500" },
-  { name: "佐藤 花子", department: "HR部", exp: 2210, rank: "A", color: "from-violet-400 to-purple-500" },
-  { name: "鈴木 一郎", department: "総務部", exp: 1980, rank: "A", color: "from-blue-400 to-cyan-500" },
-  { name: "山田 美咲", department: "営業部", exp: 1650, rank: "B", color: "from-green-400 to-emerald-500" },
+  { name: "田中 太郎", department: "営業部", exp: 2840, rank: "S", color: "from-orange-400 to-orange-600" },
+  { name: "佐藤 花子", department: "HR部", exp: 2210, rank: "A", color: "from-zinc-300 to-zinc-400" },
+  { name: "鈴木 一郎", department: "総務部", exp: 1980, rank: "A", color: "from-zinc-300 to-zinc-500" },
+  { name: "山田 美咲", department: "営業部", exp: 1650, rank: "B", color: "from-gray-500 to-gray-600" },
 ]
 
 const statsCards = [
-  { label: "今月の経験値", value: "1,580 EXP", icon: Star, color: "from-yellow-500 to-orange-500", change: "+12%" },
-  { label: "総ラッピーコイン", value: "3,240 枚", icon: Coins, color: "from-violet-500 to-pink-500", change: "+8%" },
-  { label: "連続ログイン", value: "15 日", icon: Flame, color: "from-red-500 to-orange-500", change: "継続中" },
-  { label: "今月のランク", value: "A ランク", icon: Award, color: "from-blue-500 to-cyan-500", change: "維持中" },
+  { label: "今月の経験値", value: "1,580 EXP", icon: Star, color: "from-orange-500 to-orange-600", change: "+12%" },
+  { label: "総ラッピーコイン", value: "3,240 枚", icon: Coins, color: "from-orange-500 to-amber-500", change: "+8%" },
+  { label: "連続ログイン", value: "15 日", icon: Flame, color: "from-orange-500 to-amber-600", change: "継続中" },
+  { label: "今月のランク", value: "A ランク", icon: Award, color: "from-zinc-400 to-zinc-500", change: "維持中" },
 ]
 
 export default function DashboardPage() {
@@ -53,7 +53,7 @@ export default function DashboardPage() {
         </div>
         <Link href="/chat">
           <motion.button
-            className="flex items-center gap-2 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm font-medium px-4 py-2 rounded-xl shadow-lg shadow-violet-500/30"
+            className="flex items-center gap-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white text-sm font-medium px-4 py-2 rounded-xl shadow-lg shadow-orange-500/30"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -98,7 +98,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-white font-semibold flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-violet-400" />
+              <TrendingUp className="w-5 h-5 text-orange-400" />
               今週の経験値推移
             </h2>
             <span className="text-white/40 text-sm">今週合計: 1,750 EXP</span>
@@ -115,7 +115,7 @@ export default function DashboardPage() {
               <XAxis dataKey="day" stroke="rgba(255,255,255,0.3)" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }} />
               <YAxis stroke="rgba(255,255,255,0.3)" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 12 }} />
               <Tooltip
-                contentStyle={{ backgroundColor: "#1a1635", border: "1px solid rgba(139,92,246,0.3)", borderRadius: 8, color: "#fff" }}
+                contentStyle={{ backgroundColor: "#262626", border: "1px solid rgba(139,92,246,0.3)", borderRadius: 8, color: "#fff" }}
               />
               <Area type="monotone" dataKey="exp" stroke="#8b5cf6" strokeWidth={2} fill="url(#expGradient)" />
             </AreaChart>
@@ -127,9 +127,9 @@ export default function DashboardPage() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-violet-600/20 to-pink-600/20 border border-violet-500/20 rounded-2xl p-6 flex flex-col items-center justify-center text-center"
+          className="bg-gradient-to-br from-orange-600/20 to-amber-600/20 border border-orange-500/20 rounded-2xl p-6 flex flex-col items-center justify-center text-center"
         >
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/30">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center mb-4 shadow-lg shadow-orange-500/30">
             <span className="text-3xl font-bold text-white">24</span>
           </div>
           <p className="text-white/50 text-sm">現在のレベル</p>
@@ -140,13 +140,13 @@ export default function DashboardPage() {
             </div>
             <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-violet-500 to-pink-500 rounded-full"
+                className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: "86%" }}
                 transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
               />
             </div>
-            <p className="text-violet-400 text-xs mt-2">レベルアップまで 420 EXP</p>
+            <p className="text-orange-400 text-xs mt-2">レベルアップまで 420 EXP</p>
           </div>
         </motion.div>
       </div>
@@ -160,10 +160,10 @@ export default function DashboardPage() {
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-white font-semibold flex items-center gap-2">
-            <Users className="w-5 h-5 text-violet-400" />
+            <Users className="w-5 h-5 text-orange-400" />
             今月のランキング
           </h2>
-          <Link href="/ranking" className="flex items-center gap-1 text-violet-400 text-sm hover:text-violet-300">
+          <Link href="/ranking" className="flex items-center gap-1 text-orange-400 text-sm hover:text-orange-300">
             すべて見る <ChevronRight className="w-4 h-4" />
           </Link>
         </div>

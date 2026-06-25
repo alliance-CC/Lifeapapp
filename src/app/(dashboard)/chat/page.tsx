@@ -77,7 +77,7 @@ export default function ChatPage() {
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/5 bg-white/3 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -104,7 +104,7 @@ export default function ChatPage() {
               className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "flex-row")}
             >
               {msg.role === "assistant" && (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0 mt-1">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
               )}
@@ -112,7 +112,7 @@ export default function ChatPage() {
                 className={cn(
                   "max-w-[75%] rounded-2xl px-4 py-3 text-sm",
                   msg.role === "user"
-                    ? "bg-gradient-to-br from-violet-600 to-pink-600 text-white rounded-tr-sm"
+                    ? "bg-gradient-to-br from-orange-600 to-amber-600 text-white rounded-tr-sm"
                     : "bg-white/10 text-white/90 rounded-tl-sm border border-white/10"
                 )}
               >
@@ -131,7 +131,7 @@ export default function ChatPage() {
             animate={{ opacity: 1 }}
             className="flex gap-3"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div className="bg-white/10 border border-white/10 rounded-2xl rounded-tl-sm px-4 py-3">
@@ -139,7 +139,7 @@ export default function ChatPage() {
                 {[0, 1, 2].map((i) => (
                   <motion.div
                     key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-violet-400"
+                    className="w-1.5 h-1.5 rounded-full bg-orange-400"
                     animate={{ y: [-2, 2, -2] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.2 }}
                   />
@@ -154,7 +154,7 @@ export default function ChatPage() {
       {/* Input */}
       <div className="p-4 border-t border-white/5 bg-white/3 backdrop-blur-sm">
         <div className="flex items-end gap-3">
-          <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 focus-within:border-violet-500/50 transition-all">
+          <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 focus-within:border-orange-500/50 transition-all">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -180,7 +180,7 @@ export default function ChatPage() {
           <motion.button
             onClick={sendMessage}
             disabled={!input.trim() || loading}
-            className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-violet-500/30"
+            className="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-orange-500/30"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
           >

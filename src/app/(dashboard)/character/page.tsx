@@ -6,20 +6,20 @@ import { Star, Zap, Shield, Heart, Sparkles, Edit3 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const personalities = [
-  { id: "cheerful", label: "明るい・元気", emoji: "😊", color: "from-yellow-400 to-orange-500" },
-  { id: "calm", label: "落ち着いた・知的", emoji: "🧠", color: "from-blue-400 to-cyan-500" },
+  { id: "cheerful", label: "明るい・元気", emoji: "😊", color: "from-orange-400 to-orange-600" },
+  { id: "calm", label: "落ち着いた・知的", emoji: "🧠", color: "from-zinc-300 to-zinc-500" },
   { id: "cool", label: "クール・カッコいい", emoji: "😎", color: "from-gray-400 to-slate-500" },
-  { id: "gentle", label: "優しい・癒し系", emoji: "🌸", color: "from-pink-400 to-rose-500" },
+  { id: "gentle", label: "優しい・癒し系", emoji: "🌸", color: "from-amber-400 to-amber-500" },
 ]
 
-const hairColors = ["#1a1a1a", "#8B4513", "#FFD700", "#FF6B6B", "#4169E1", "#9370DB", "#FFFFFF"]
-const outfitColors = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444", "#ec4899"]
+const hairColors = ["#171717", "#52525b", "#a1a1aa", "#d4d4d8", "#8B4513", "#f97316", "#FFFFFF"]
+const outfitColors = ["#f97316", "#fb923c", "#171717", "#3f3f46", "#71717a", "#d4d4d8"]
 
 export default function CharacterPage() {
   const [name, setName] = useState("ライフちゃん")
   const [personality, setPersonality] = useState("cheerful")
-  const [hairColor, setHairColor] = useState("#FFD700")
-  const [outfitColor, setOutfitColor] = useState("#8b5cf6")
+  const [hairColor, setHairColor] = useState("#171717")
+  const [outfitColor, setOutfitColor] = useState("#f97316")
 
   const selectedPersonality = personalities.find((p) => p.id === personality)
 
@@ -47,7 +47,7 @@ export default function CharacterPage() {
               {selectedPersonality?.emoji}
             </div>
             {/* Level badge */}
-            <div className="absolute -bottom-2 -right-2 w-12 h-12 rounded-full bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center border-2 border-white/20">
+            <div className="absolute -bottom-2 -right-2 w-12 h-12 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center border-2 border-white/20">
               <span className="text-white font-bold text-sm">24</span>
             </div>
             {/* Glow */}
@@ -67,10 +67,10 @@ export default function CharacterPage() {
           {/* Stats */}
           <div className="w-full space-y-3">
             {[
-              { label: "レベル", value: 24, max: 100, icon: Star, color: "from-yellow-500 to-orange-500" },
-              { label: "経験値", value: 86, max: 100, icon: Zap, color: "from-violet-500 to-pink-500" },
-              { label: "強さ", value: 72, max: 100, icon: Shield, color: "from-blue-500 to-cyan-500" },
-              { label: "好感度", value: 95, max: 100, icon: Heart, color: "from-pink-500 to-rose-500" },
+              { label: "レベル", value: 24, max: 100, icon: Star, color: "from-orange-500 to-orange-600" },
+              { label: "経験値", value: 86, max: 100, icon: Zap, color: "from-orange-500 to-amber-500" },
+              { label: "強さ", value: 72, max: 100, icon: Shield, color: "from-zinc-400 to-zinc-500" },
+              { label: "好感度", value: 95, max: 100, icon: Heart, color: "from-amber-500 to-amber-500" },
             ].map((stat) => {
               const Icon = stat.icon
               return (
@@ -112,7 +112,7 @@ export default function CharacterPage() {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-violet-500/50 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500/50 transition-all"
               placeholder="名前を入力..."
             />
           </div>
@@ -131,7 +131,7 @@ export default function CharacterPage() {
                   className={cn(
                     "flex items-center gap-2 p-3 rounded-xl border transition-all text-left",
                     personality === p.id
-                      ? "border-violet-500/50 bg-violet-500/10"
+                      ? "border-orange-500/50 bg-orange-500/10"
                       : "border-white/10 bg-white/3 hover:bg-white/5"
                   )}
                   whileHover={{ scale: 1.02 }}
@@ -183,7 +183,7 @@ export default function CharacterPage() {
           </div>
 
           <motion.button
-            className="w-full bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-violet-500/30"
+            className="w-full bg-gradient-to-r from-orange-600 to-amber-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-orange-500/30"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >

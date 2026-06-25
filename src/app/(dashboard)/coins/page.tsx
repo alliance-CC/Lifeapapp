@@ -27,7 +27,7 @@ export default function CoinsPage() {
     <div className="p-6 md:p-8 space-y-6">
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Coins className="w-6 h-6 text-yellow-400" />
+          <Coins className="w-6 h-6 text-orange-400" />
           ラッピーコイン
         </h1>
         <p className="text-white/50 text-sm mt-1">社内通貨の残高と履歴</p>
@@ -37,18 +37,18 @@ export default function CoinsPage() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border border-yellow-500/20 rounded-2xl p-8 text-center"
+        className="bg-gradient-to-br from-orange-600/20 to-amber-600/20 border border-orange-500/20 rounded-2xl p-8 text-center"
       >
         <motion.div
           animate={{ rotate: [0, 5, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 mb-4 shadow-lg shadow-yellow-500/30"
+          className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 mb-4 shadow-lg shadow-orange-500/30"
         >
           <Coins className="w-10 h-10 text-white" />
         </motion.div>
         <p className="text-white/60 text-sm mb-1">現在の残高</p>
         <p className="text-5xl font-bold text-white mb-1">3,240</p>
-        <p className="text-yellow-400 text-sm">ラッピーコイン</p>
+        <p className="text-orange-400 text-sm">ラッピーコイン</p>
         <div className="flex justify-center gap-6 mt-6 pt-4 border-t border-white/10">
           <div>
             <p className="text-white font-bold text-xl">8,420</p>
@@ -70,7 +70,7 @@ export default function CoinsPage() {
         className="bg-white/5 border border-white/10 rounded-2xl p-6"
       >
         <h2 className="text-white font-semibold flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-yellow-400" />
+          <TrendingUp className="w-5 h-5 text-orange-400" />
           月間獲得推移
         </h2>
         <ResponsiveContainer width="100%" height={160}>
@@ -83,7 +83,7 @@ export default function CoinsPage() {
             </defs>
             <XAxis dataKey="month" stroke="rgba(255,255,255,0.3)" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }} />
             <YAxis stroke="rgba(255,255,255,0.3)" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 11 }} />
-            <Tooltip contentStyle={{ backgroundColor: "#1a1635", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 8, color: "#fff" }} />
+            <Tooltip contentStyle={{ backgroundColor: "#262626", border: "1px solid rgba(245,158,11,0.3)", borderRadius: 8, color: "#fff" }} />
             <Area type="monotone" dataKey="coins" stroke="#f59e0b" strokeWidth={2} fill="url(#coinGradient)" />
           </AreaChart>
         </ResponsiveContainer>
@@ -97,7 +97,7 @@ export default function CoinsPage() {
         className="bg-white/5 border border-white/10 rounded-2xl p-6"
       >
         <h2 className="text-white font-semibold flex items-center gap-2 mb-4">
-          <Gift className="w-5 h-5 text-violet-400" />
+          <Gift className="w-5 h-5 text-orange-400" />
           取引履歴
         </h2>
         <div className="space-y-2">

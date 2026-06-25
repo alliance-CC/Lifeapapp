@@ -18,13 +18,13 @@ export default function SplashPage() {
   }, [router])
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e]">
+    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#171717] via-[#262626] to-[#0a0a0a]">
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full bg-violet-500/10"
+            className="absolute rounded-full bg-orange-500/10"
             style={{
               width: Math.random() * 300 + 50,
               height: Math.random() * 300 + 50,
@@ -61,8 +61,8 @@ export default function SplashPage() {
               animate={phase !== 'logo' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
-              <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-500 to-pink-500 p-1 shadow-2xl shadow-violet-500/50">
-                <div className="w-full h-full rounded-full bg-[#1a1a2e] flex items-center justify-center overflow-hidden">
+              <div className="w-full h-full rounded-full bg-gradient-to-br from-orange-500 to-amber-500 p-1 shadow-2xl shadow-orange-500/50">
+                <div className="w-full h-full rounded-full bg-[#171717] flex items-center justify-center overflow-hidden">
                   {/* Character image placeholder - user will add image to /public/character.png */}
                   <div className="relative w-full h-full">
                     <Image
@@ -80,7 +80,7 @@ export default function SplashPage() {
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-2 rounded-full border-2 border-dashed border-violet-400/30"
+                        className="absolute inset-2 rounded-full border-2 border-dashed border-orange-400/30"
                       />
                       <span className="text-6xl">🌟</span>
                     </div>
@@ -90,12 +90,12 @@ export default function SplashPage() {
 
               {/* Glow rings */}
               <motion.div
-                className="absolute inset-0 rounded-full border-2 border-violet-500/30"
+                className="absolute inset-0 rounded-full border-2 border-orange-500/30"
                 animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
               <motion.div
-                className="absolute inset-0 rounded-full border-2 border-pink-500/30"
+                className="absolute inset-0 rounded-full border-2 border-amber-500/30"
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
               />
@@ -112,7 +112,7 @@ export default function SplashPage() {
                 className="text-3xl md:text-4xl font-bold text-white mb-2"
                 animate={{ opacity: 1 }}
               >
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
                   LifeUp
                 </span>
                 <span className="text-white/80 text-xl ml-2">App</span>
@@ -140,7 +140,7 @@ export default function SplashPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.div
-                className="h-full bg-gradient-to-r from-violet-500 to-pink-500 rounded-full"
+                className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
                 transition={{ duration: 3, ease: "easeInOut" }}
