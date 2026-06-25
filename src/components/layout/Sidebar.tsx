@@ -17,15 +17,17 @@ import {
   Coins,
   Menu,
   Sparkles,
+  Heart,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { createClient } from "@/lib/supabase/client"
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 
 const navItems = [
   { href: "/dashboard", label: "ダッシュボード", icon: LayoutDashboard },
   { href: "/chat", label: "AIチャット", icon: MessageCircle },
+  { href: "/thanks", label: "サンクス & 事例", icon: Heart },
   { href: "/character", label: "キャラクター", icon: Star },
   { href: "/ranking", label: "ランキング", icon: BarChart3 },
   { href: "/coins", label: "ラッピーコイン", icon: Coins },
@@ -34,15 +36,21 @@ const navItems = [
   { href: "/settings", label: "設定", icon: Settings },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  accentColor?: string
+}
+
+export function Sidebar({ accentColor = "#f97316" }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    if (isSupabaseConfigured()) {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+    }
     toast.success("ログアウトしました")
     router.push("/login")
   }
@@ -51,7 +59,10 @@ export function Sidebar() {
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="flex items-center gap-3 p-4 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center flex-shrink-0">
+        <div
+          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}cc)` }}
+        >
           <Sparkles className="w-4 h-4 text-white" />
         </div>
         <AnimatePresence>
@@ -69,7 +80,7 @@ export function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-2 space-y-1">
+      <nav className="flex-1 px-2 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon
           const active = pathname === item.href
@@ -78,13 +89,22 @@ export function Sidebar() {
               <motion.div
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group",
-                  active
-                    ? "bg-gradient-to-r from-orange-600/20 to-amber-600/20 border border-orange-500/30"
-                    : "hover:bg-white/5"
+                  active ? "border" : "hover:bg-white/5"
                 )}
+                style={
+                  active
+                    ? {
+                        background: `${accentColor}18`,
+                        borderColor: `${accentColor}40`,
+                      }
+                    : {}
+                }
                 whileHover={{ x: 2 }}
               >
-                <Icon className={cn("w-5 h-5 flex-shrink-0", active ? "text-orange-400" : "text-white/50 group-hover:text-white/80")} />
+                <Icon
+                  className={cn("w-5 h-5 flex-shrink-0 transition-colors", active ? "" : "text-white/50 group-hover:text-white/80")}
+                  style={active ? { color: accentColor } : {}}
+                />
                 <AnimatePresence>
                   {!collapsed && (
                     <motion.span
@@ -99,7 +119,8 @@ export function Sidebar() {
                 </AnimatePresence>
                 {active && (
                   <motion.div
-                    className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0"
+                    className="ml-auto w-1.5 h-1.5 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: accentColor }}
                     layoutId="activeIndicator"
                   />
                 )}
@@ -143,7 +164,8 @@ export function Sidebar() {
       >
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute -right-3 top-8 w-6 h-6 rounded-full bg-orange-600 flex items-center justify-center z-10 shadow-lg"
+          className="absolute -right-3 top-8 w-6 h-6 rounded-full flex items-center justify-center z-10 shadow-lg"
+          style={{ backgroundColor: accentColor }}
         >
           <motion.div animate={{ rotate: collapsed ? 180 : 0 }}>
             <ChevronLeft className="w-3 h-3 text-white" />
@@ -155,7 +177,8 @@ export function Sidebar() {
       {/* Mobile FAB */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="md:hidden fixed bottom-6 left-6 z-50 w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/40"
+        className="md:hidden fixed bottom-6 left-6 z-50 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"
+        style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}bb)`, boxShadow: `0 4px 20px ${accentColor}40` }}
       >
         <Menu className="w-5 h-5 text-white" />
       </button>
