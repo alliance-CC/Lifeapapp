@@ -49,7 +49,7 @@ const settingSections = [
   {
     title: "AI設定",
     items: [
-      { icon: Key, label: "APIキー設定", desc: "Gemini / OpenAI / Claude APIキーを登録" },
+      { icon: Key, label: "APIキー設定", desc: "Gemini（推奨）/ OpenAI APIキーを登録。キャラAI生成にも使用" },
       { icon: Globe, label: "使用するAIモデル", desc: "現在: Gemini 1.5 Flash" },
     ],
   },
@@ -65,7 +65,8 @@ const settingSections = [
 export default function SettingsPage() {
   const { theme, updateTheme } = useTheme()
   const [apiKey, setApiKey] = useState(() => {
-    if (typeof window !== "undefined") return localStorage.getItem("lifeup-openai-key") || ""
+    if (typeof window !== "undefined")
+      return localStorage.getItem("lifeup-ai-key") || localStorage.getItem("lifeup-openai-key") || ""
     return ""
   })
   const [showApiInput, setShowApiInput] = useState(false)
@@ -300,11 +301,12 @@ export default function SettingsPage() {
                     className="mt-2 bg-white/5 border border-orange-500/20 rounded-xl p-4 space-y-3 overflow-hidden"
                   >
                     <p className="text-white/70 text-sm font-medium">APIキーを入力</p>
+                    <p className="text-white/40 text-xs">Gemini（AIza...）または OpenAI（sk-...）のキーに対応。キー種別は自動判定されます。</p>
                     <input
                       type="password"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
-                      placeholder="sk-... または AI..."
+                      placeholder="AIza... または sk-..."
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 text-sm focus:outline-none focus:border-orange-500/50"
                     />
                     <div className="flex gap-2">
@@ -316,8 +318,8 @@ export default function SettingsPage() {
                       </button>
                       <motion.button
                         onClick={() => {
-                          localStorage.setItem("lifeup-openai-key", apiKey)
-                          toast.success("OpenAI APIキーを保存しました")
+                          localStorage.setItem("lifeup-ai-key", apiKey)
+                          toast.success("APIキーを保存しました")
                           setShowApiInput(false)
                         }}
                         className="flex-1 py-2 rounded-lg bg-orange-600 text-white text-sm"

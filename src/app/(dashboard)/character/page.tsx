@@ -200,7 +200,9 @@ export default function CharacterPage() {
     setGenerationError(null)
 
     const apiKey =
-      typeof window !== "undefined" ? localStorage.getItem("lifeup-openai-key") || "" : ""
+      typeof window !== "undefined"
+        ? localStorage.getItem("lifeup-ai-key") || localStorage.getItem("lifeup-openai-key") || ""
+        : ""
 
     try {
       const res = await fetch("/api/generate-character", {
@@ -751,7 +753,7 @@ export default function CharacterPage() {
                     <p className="font-medium mb-1">生成に失敗しました</p>
                     <p className="text-xs text-red-400/70">{generationError}</p>
                     <p className="text-xs text-red-400/50 mt-1">
-                      設定ページでOpenAI APIキーが登録されているか確認してください。
+                      設定ページ → AI設定 → APIキー設定 で Gemini または OpenAI のAPIキーを登録してください。
                     </p>
                   </motion.div>
                 )}
@@ -835,7 +837,7 @@ export default function CharacterPage() {
               <div className="flex items-start gap-2 px-3 py-2 rounded-xl bg-white/3 border border-white/5">
                 <Sparkles className="w-3.5 h-3.5 text-white/25 mt-0.5 flex-shrink-0" />
                 <p className="text-white/25 text-xs">
-                  OpenAI APIキーが必要です。設定ページ → AI設定 → APIキー設定 で登録してください。
+                  APIキーが必要です。設定ページ → AI設定 → APIキー設定 で Gemini（推奨）または OpenAI のキーを登録してください。
                 </p>
               </div>
             </motion.div>
