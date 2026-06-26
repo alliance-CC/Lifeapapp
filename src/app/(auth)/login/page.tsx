@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Eye, EyeOff, Mail, Lock, User, Sparkles } from "lucide-react"
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client"
 import toast from "react-hot-toast"
 
 type Mode = "login" | "signup"
@@ -22,40 +21,32 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
 
-    // Supabase が未設定の場合はデモモードとしてダッシュボードへ
-    if (!isSupabaseConfigured()) {
-      toast.success(
-        mode === "signup" ? "デモモードでアカウント作成しました" : "デモモードでログインしました"
-      )
-      router.push("/dashboard")
-      setLoading(false)
-      return
-    }
-
     try {
-      const supabase = createClient()
+      const endpoint = mode === "signup" ? "/api/auth/signup" : "/api/auth/login"
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      })
+      const data = await res.json()
 
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { name } },
-        })
-        if (error) {
-          toast.error(error.message)
-        } else {
-          toast.success("アカウントを作成しました！確認メールをご確認ください")
-          setMode("login")
-        }
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password })
-        if (error) {
-          toast.error(error.message)
-        } else {
-          toast.success("ログイン成功！")
-          router.push("/dashboard")
-        }
+      if (!res.ok) {
+        toast.error(data.error || "エラーが発生しました")
+        return
       }
+
+      if (data.demo) {
+        toast.success(
+          mode === "signup" ? "デモモードでアカウント作成しました" : "デモモードでログインしました"
+        )
+      } else {
+        toast.success(
+          mode === "signup"
+            ? `アカウントを作成しました！${data.user?.role === "manager" ? "（管理者として登録）" : ""}`
+            : "ログイン成功！"
+        )
+      }
+      router.push("/dashboard")
     } catch {
       toast.error("エラーが発生しました")
     } finally {

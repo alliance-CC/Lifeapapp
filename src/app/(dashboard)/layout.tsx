@@ -2,6 +2,7 @@
 
 import { Sidebar } from "@/components/layout/Sidebar"
 import { ThemeProvider, useTheme } from "@/contexts/ThemeContext"
+import { ProfileProvider } from "@/contexts/ProfileContext"
 
 function ThemedLayout({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
@@ -51,7 +52,9 @@ function ThemedLayout({ children }: { children: React.ReactNode }) {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <ThemedLayout>{children}</ThemedLayout>
+      <ProfileProvider>
+        <ThemedLayout>{children}</ThemedLayout>
+      </ProfileProvider>
     </ThemeProvider>
   )
 }

@@ -7,6 +7,7 @@ export type AppTheme = {
   bgImage: string | null
   bgOpacity: number
   glassIntensity: number
+  characterImage: string | null
 }
 
 const defaultTheme: AppTheme = {
@@ -14,6 +15,7 @@ const defaultTheme: AppTheme = {
   bgImage: null,
   bgOpacity: 0.2,
   glassIntensity: 5,
+  characterImage: null,
 }
 
 const ThemeContext = createContext<{

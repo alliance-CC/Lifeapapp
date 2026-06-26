@@ -72,26 +72,71 @@ export default function ThanksPage() {
   const [caseContent, setCaseContent] = useState("")
   const [caseResult, setCaseResult] = useState("")
 
-  const handleSendThanks = () => {
+  const [sending, setSending] = useState(false)
+
+  const handleSendThanks = async () => {
     if (!selectedRecipient || !message.trim()) {
       toast.error("送信先とメッセージを入力してください")
       return
     }
     const recipient = recipients.find((r) => r.id === selectedRecipient)
-    toast.success(`${recipient?.name}さんにサンクスメッセージを送りました！ +${points} EXP 獲得`)
-    setMessage("")
-    setSelectedRecipient("")
+    const categoryLabel = thankCategories.find((c) => c.id === thankCategory)?.label ?? ""
+    setSending(true)
+    try {
+      const res = await fetch("/api/thanks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "thanks",
+          toUserId: recipient?.id ?? "",
+          toName: recipient?.name ?? "",
+          category: categoryLabel,
+          message,
+          points,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "送信に失敗しました")
+      toast.success(`${recipient?.name}さんにサンクスメッセージを送りました！ +${points} EXP 獲得`)
+      setMessage("")
+      setSelectedRecipient("")
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "送信に失敗しました")
+    } finally {
+      setSending(false)
+    }
   }
 
-  const handlePostCase = () => {
+  const handlePostCase = async () => {
     if (!caseTitle.trim() || !caseContent.trim()) {
       toast.error("タイトルと内容を入力してください")
       return
     }
-    toast.success("事例を共有しました！ +100 EXP 獲得")
-    setCaseTitle("")
-    setCaseContent("")
-    setCaseResult("")
+    const categoryLabel = caseCategories.find((c) => c.id === caseCategory)?.label ?? ""
+    setSending(true)
+    try {
+      const res = await fetch("/api/thanks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "case",
+          category: categoryLabel,
+          title: caseTitle,
+          content: caseContent,
+          result: caseResult,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "投稿に失敗しました")
+      toast.success("事例を共有しました！ +100 EXP 獲得")
+      setCaseTitle("")
+      setCaseContent("")
+      setCaseResult("")
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "投稿に失敗しました")
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -243,12 +288,13 @@ export default function ThanksPage() {
 
                 <motion.button
                   onClick={handleSendThanks}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2"
+                  disabled={sending}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-50"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Send className="w-4 h-4" />
-                  送信する (+{points} EXP 獲得)
+                  {sending ? "送信中..." : `送信する (+${points} EXP 獲得)`}
                 </motion.button>
               </div>
             </div>
@@ -360,12 +406,13 @@ export default function ThanksPage() {
 
               <motion.button
                 onClick={handlePostCase}
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2"
+                disabled={sending}
+                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-50"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <BookOpen className="w-4 h-4" />
-                事例を投稿する (+100 EXP 獲得)
+                {sending ? "投稿中..." : "事例を投稿する (+100 EXP 獲得)"}
               </motion.button>
             </div>
 
