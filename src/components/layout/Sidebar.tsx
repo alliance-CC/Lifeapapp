@@ -21,7 +21,6 @@ import {
   ShieldCheck,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { useProfile } from "@/contexts/ProfileContext"
@@ -52,9 +51,10 @@ export function Sidebar({ accentColor = "#f97316" }: SidebarProps) {
   const { isManager, profile } = useProfile()
 
   const handleLogout = async () => {
-    if (isSupabaseConfigured()) {
-      const supabase = createClient()
-      await supabase.auth.signOut()
+    try {
+      await fetch("/api/auth/logout", { method: "POST" })
+    } catch {
+      // ignore
     }
     toast.success("ログアウトしました")
     router.push("/login")

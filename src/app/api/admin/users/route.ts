@@ -1,29 +1,23 @@
 import { NextRequest, NextResponse } from "next/server"
-import { createClient as createServerClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
-import { isSupabaseConfigured } from "@/lib/supabase/client"
+import { callSheets, isSheetsConfigured } from "@/lib/sheets/client"
+import { getSessionUserId } from "@/lib/sheets/auth"
 
+// ログイン中ユーザーのロールを取得
 async function getRequestingUserRole(): Promise<string | null> {
+  const userId = await getSessionUserId()
+  if (!userId) return null
+  if (!isSheetsConfigured()) return "manager" // デモモードは管理者扱い
   try {
-    const supabase = await createServerClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return null
-
-    const { data } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single()
-    return data?.role ?? null
+    const result = await callSheets<{ user?: { role?: string } | null }>("getUserById", { userId })
+    return result.user?.role ?? null
   } catch {
     return null
   }
 }
 
-// GET /api/admin/users — manager only: list all users
+// GET /api/admin/users — 管理者のみ: ユーザー一覧
 export async function GET() {
-  if (!isSupabaseConfigured()) {
-    // Demo mode: return sample data
+  if (!isSheetsConfigured()) {
     return NextResponse.json({
       users: [
         { id: "demo-1", name: "管理者ユーザー", email: "manager@lifeup.jp", role: "manager", department: "経営", job_type: "代表" },
@@ -40,23 +34,22 @@ export async function GET() {
   }
 
   try {
-    const admin = createAdminClient()
-    const { data, error } = await admin
-      .from("profiles")
-      .select("id, name, email, role, department, job_type, avatar_url, created_at")
-      .order("created_at", { ascending: true })
-
-    if (error) throw error
-    return NextResponse.json({ users: data })
+    const result = await callSheets<{ users?: unknown[] }>("listUsers")
+    return NextResponse.json({ users: result.users ?? [] })
   } catch (err) {
     const msg = err instanceof Error ? err.message : "取得に失敗しました"
     return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
 
-// PATCH /api/admin/users — manager only: update a user's role
+// PATCH /api/admin/users — 管理者のみ: ロール変更
 export async function PATCH(request: NextRequest) {
-  if (!isSupabaseConfigured()) {
+  const { userId, newRole } = (await request.json()) as { userId: string; newRole: string }
+  if (!userId || !["manager", "leader", "general"].includes(newRole)) {
+    return NextResponse.json({ error: "無効なリクエストです" }, { status: 400 })
+  }
+
+  if (!isSheetsConfigured()) {
     return NextResponse.json({ success: true })
   }
 
@@ -65,37 +58,9 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: "権限がありません" }, { status: 403 })
   }
 
-  const { userId, newRole } = await request.json() as { userId: string; newRole: string }
-  if (!userId || !["manager", "leader", "general"].includes(newRole)) {
-    return NextResponse.json({ error: "無効なリクエストです" }, { status: 400 })
-  }
-
   try {
-    const admin = createAdminClient()
-
-    // Prevent demoting the last manager
-    if (newRole !== "manager") {
-      const { count } = await admin
-        .from("profiles")
-        .select("id", { count: "exact", head: true })
-        .eq("role", "manager")
-      if ((count ?? 0) <= 1) {
-        const { data: target } = await admin.from("profiles").select("role").eq("id", userId).single()
-        if (target?.role === "manager") {
-          return NextResponse.json(
-            { error: "最後の管理者アカウントの権限を変更することはできません" },
-            { status: 400 }
-          )
-        }
-      }
-    }
-
-    const { error } = await admin
-      .from("profiles")
-      .update({ role: newRole, updated_at: new Date().toISOString() })
-      .eq("id", userId)
-
-    if (error) throw error
+    const result = await callSheets<{ success?: boolean; error?: string }>("updateRole", { userId, newRole })
+    if (result.error) return NextResponse.json({ error: result.error }, { status: 400 })
     return NextResponse.json({ success: true })
   } catch (err) {
     const msg = err instanceof Error ? err.message : "更新に失敗しました"

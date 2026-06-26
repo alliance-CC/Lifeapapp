@@ -50,13 +50,24 @@ export default function ReportsPage() {
       return
     }
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1500))
-    setLoading(false)
-    setIsCreating(false)
-    setGood("")
-    setBad("")
-    setBadCause("")
-    toast.success("日報を提出しました！ +50 EXP 獲得")
+    try {
+      const res = await fetch("/api/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ good, bad, badCause }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "提出に失敗しました")
+      setIsCreating(false)
+      setGood("")
+      setBad("")
+      setBadCause("")
+      toast.success("日報を提出しました！ +50 EXP 獲得")
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "提出に失敗しました")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

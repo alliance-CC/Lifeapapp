@@ -1,7 +1,6 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react"
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client"
 
 export type UserRole = "manager" | "leader" | "general"
 
@@ -13,6 +12,8 @@ export type Profile = {
   department: string
   job_type: string
   avatar_url: string | null
+  level?: number
+  experience?: number
 }
 
 type ProfileContextType = {
@@ -35,51 +36,20 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchProfile = useCallback(async (userId: string) => {
-    if (!isSupabaseConfigured()) {
-      setLoading(false)
-      return
-    }
+  const fetchProfile = useCallback(async () => {
     try {
-      const supabase = createClient()
-      const { data } = await supabase
-        .from("profiles")
-        .select("id, name, email, role, department, job_type, avatar_url")
-        .eq("id", userId)
-        .single()
-      if (data) setProfile(data as Profile)
+      const res = await fetch("/api/auth/me", { cache: "no-store" })
+      const data = await res.json()
+      setProfile(data.user ?? null)
     } catch {
-      // profiles table may not exist yet
+      setProfile(null)
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
-      setLoading(false)
-      return
-    }
-    const supabase = createClient()
-
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) fetchProfile(user.id)
-      else setLoading(false)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      if (session?.user) fetchProfile(session.user.id)
-      else { setProfile(null); setLoading(false) }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [fetchProfile])
-
-  const refreshProfile = useCallback(async () => {
-    if (!isSupabaseConfigured()) return
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user) await fetchProfile(user.id)
+    fetchProfile()
   }, [fetchProfile])
 
   return (
@@ -88,7 +58,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       loading,
       isManager: profile?.role === "manager",
       isLeader: profile?.role === "manager" || profile?.role === "leader",
-      refreshProfile,
+      refreshProfile: fetchProfile,
     }}>
       {children}
     </ProfileContext.Provider>
